@@ -1,11 +1,8 @@
-import './App.css';
-import '@coreui/coreui/dist/css/coreui.min.css';
-import 'bootstrap/dist/css/bootstrap.min.css'
 import Router from "./routers/router";
 import React, {useContext} from "react";
 import {
 	LayoutContext,
-	LayoutContextProvider,
+	LayoutProvider,
 } from "./organisms/LayoutContext";
 import PublicLayout from "./layouts/Public";
 
@@ -19,8 +16,8 @@ function AppInner() {
 
 export default function App() {
 	return (
-		<LayoutContextProvider>
+		<LayoutProvider>
 			<AppInner/>
-		</LayoutContextProvider>
+		</LayoutProvider>
 	);
 }

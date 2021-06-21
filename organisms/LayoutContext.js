@@ -1,4 +1,4 @@
-import React, {useReducer, Children, useContext, useEffect} from "react";
+import React, {useReducer, useMemo} from "react";
 export const LayoutContext = React.createContext(false);
 export const reducer = (state, action) => {
 	switch (action.type) {
@@ -22,10 +22,11 @@ export const initialState = {
 	section: {},
 };
 
-export const LayoutProvider = props => {
+export function LayoutProvider (props) {
 	const [state, dispatch] = useReducer(reducer, initialState);
+	const value = useMemo(() => ({ state, dispatch }), [state]);
 	return (
-		<LayoutContext.Provider value={{state, dispatch}}>
+		<LayoutContext.Provider value={value}>
 			{props.children}
 		</LayoutContext.Provider>
 	);

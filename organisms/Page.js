@@ -5,11 +5,11 @@ import isArray from 'lodash.isarray';
 import Layout from "../molecules/Layout";
 import Section from "../molecules/Section";
 
-const getSections = (parent) => {
+function getSections (parent) {
 	if (isPlainObject(parent)) {
 		// Check if the element is a section
-		if (parent.type && parent.props.layout_section) {
-			return {[parent.props.layout_section]: parent};
+		if (parent.type && parent.props.name) {
+			return {[parent.props.name]: parent};
 		}
 		return {};
 	} else if (isArray(parent)) {
@@ -22,22 +22,22 @@ const getSections = (parent) => {
 	return {};
 }
 
-export default (props) => {
-	if (!props.layout_name) {
+export default function (props) {
+	if (!props.layout) {
 		const msg = 'Layout not specified';
 		return (msg)
 	}
 	const {state, dispatch} = useContext(LayoutContext);
 	let layout = ()=><Section name="main">placeholder</Section>;
 	if(state.layouts) {
-		layout = state.layouts[props.layout_name];
+		layout = state.layouts[props.layout];
 	}
 
 	const section = getSections(props.children);
 	const children = props.children;
 
 	props = {...props};
-	delete props.layout_name;
+	delete props.layout;
 	delete props.children;
 
 	useEffect(() => {
